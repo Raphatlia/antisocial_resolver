@@ -13,10 +13,15 @@ jobs:
 
       - name: Install Theos
         run: |
-          brew install ldid xz
+          brew install ldid xz dos2unix
           git clone --recursive https://github.com/theos/theos.git $HOME/theos
           echo "THEOS=$HOME/theos" >> $GITHUB_ENV
           echo "$HOME/theos/bin" >> $GITHUB_PATH
+
+      - name: Fix line endings
+        run: |
+          dos2unix control Makefile 2>/dev/null || true
+          file control
 
       - name: Build Tweak
         run: |
